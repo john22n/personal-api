@@ -1,3 +1,4 @@
+var skills = require('../skills');
 module.exports = {
 
     addHeaders: function (req, res, next) {
@@ -15,9 +16,19 @@ module.exports = {
     },
     generateID: function (req, res, next) {
         var id = skills.length + 1;
-        req.query.id = id;
+        req.body.id = id;
         next();
 
+    },
+    verifyUser: function(req, res, next) {
+        var username = req.params.username;
+        var password = req.params.pin;
+
+        if (username === 'john' && password === 'password1'){
+            next();
+        } else {
+            console.log('err wrong cridentials')
+        }
     }
 
 };

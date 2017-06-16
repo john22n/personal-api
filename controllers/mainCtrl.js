@@ -75,6 +75,9 @@ module.exports = {
         user.hobbies.push(req.query);
         res.status(200).json(user.hobbies);
     },
+    //post
+
+
     postOccupation: function(req, res) {
         user.occupations.push(req.query);
         return res.status(200).json(user.occupations);
@@ -88,17 +91,30 @@ module.exports = {
         return res.status(200).json(user.restaurants);
     },
     getSkillz: function(req, res) {
-        var experience = req.params.experience;
+        var experience = req.query.experience;
         if(experience) {
-           var filtered =  skills.filter(function(value) {
-                return value.experience === experience;
+            var filtered = skills.filter(function (value) {
+                return value.experience.includes(experience);
             });
-        } else {
-            return res.status(200).json(skills);
         }
+            else {
+                return res.status(200).json(skills);
+        }
+        console.log(filtered);
+        return res.status(200).json(filtered);
+
     },
     postSkill: function(req, res) {
-        skills.push(req.query);
+        var id = req.body.id;
+        var name = req.body.name;
+        var experience = req.body.experience;
+        skills.push(
+            {
+                "id": id,
+                "name": name,
+                "experience": experience
+            }
+        );
         res.status(200).json(skills);
     }
 

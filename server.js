@@ -3,6 +3,7 @@ var bodyParser = require('body-parser');
 var middleware = require('./controllers/middleware.js');
 var mainCtrl = require('./controllers/mainCtrl.js');
 
+
 var app = express();
 
 app.use(bodyParser.json());
@@ -21,15 +22,17 @@ app.get('/restaurants', mainCtrl.getRest);
 app.get('/restaurants/:name', mainCtrl.getRestName);
 app.get('/skills', mainCtrl.getSkillz);
 
+app.get('/secrets/:username/:pin', middleware.verifyUser, mainCtrl.showUser);
+
 app.put('/name/:name', mainCtrl.changeName);
 app.put('/location/:place', mainCtrl.changeLocation);
 app.post('/hobbies', mainCtrl.addHobbie);
 app.post('/occupations', mainCtrl.postOccupation);
 app.post('/family', mainCtrl.postFam);
 app.post('/restaurants', mainCtrl.postRestaurants);
-app.post('/skillz/:experience', mainCtrl.postSkill);
 
-app.post('/skillz', middleware.generateId, mainCtrl.postSkill);
+app.post('/skillz',middleware.generateID,  mainCtrl.postSkill);
+
 
 
 
